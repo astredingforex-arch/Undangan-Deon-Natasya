@@ -1,0 +1,1486 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>Deon & Natasya — The Royal Wedding</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#080808;
+  --black2:#101010;
+  --panel:#141311;
+  --gold:#c8a96e;
+  --gold2:#ead5a6;
+  --muted:#99938a;
+  --white:#f2eee6;
+  --line:rgba(200,169,110,.24);
+  --serif:'Cormorant Garamond',serif;
+  --display:'Italiana',serif;
+  --sans:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--sans);
+  overflow-x:hidden;
+}
+body.locked{overflow:hidden}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:100%;object-fit:cover}
+::selection{background:var(--gold);color:#080808}
+
+/* GLOBAL */
+.gold{color:var(--gold)}
+.eyebrow{
+  color:var(--gold);
+  font-size:9px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.section{
+  padding:130px 8%;
+  position:relative;
+}
+.section-heading{
+  font-family:var(--serif);
+  font-size:clamp(45px,7vw,88px);
+  font-weight:300;
+  line-height:.95;
+}
+.section-heading em{color:var(--gold);font-weight:300}
+.section-intro{
+  color:var(--muted);
+  font-size:12px;
+  line-height:2;
+  max-width:430px;
+  margin-top:22px;
+}
+.gold-line{
+  height:1px;
+  width:70px;
+  background:var(--gold);
+  margin:25px 0;
+}
+.corner{
+  position:absolute;
+  width:35px;height:35px;
+  border-color:var(--gold);
+  opacity:.5;
+}
+.corner.tl{top:20px;left:20px;border-top:1px solid;border-left:1px solid}
+.corner.tr{top:20px;right:20px;border-top:1px solid;border-right:1px solid}
+.corner.bl{bottom:20px;left:20px;border-bottom:1px solid;border-left:1px solid}
+.corner.br{bottom:20px;right:20px;border-bottom:1px solid;border-right:1px solid}
+
+/* LOADER */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:#050505;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 1s,visibility 1s;
+}
+#loader.hide{opacity:0;visibility:hidden}
+.loader-content{text-align:center}
+.loader-monogram{
+  font-family:var(--display);
+  font-size:76px;color:var(--gold);
+  letter-spacing:8px;
+}
+.loader-line{
+  width:130px;height:1px;background:#333;
+  margin:25px auto;overflow:hidden;
+}
+.loader-line:after{
+  content:"";display:block;width:40%;height:100%;
+  background:var(--gold);animation:loading 1.4s infinite;
+}
+@keyframes loading{from{transform:translateX(-100%)}to{transform:translateX(350%)}}
+
+/* INVITATION COVER */
+#invitation{
+  position:fixed;inset:0;z-index:9000;
+  background:
+    linear-gradient(rgba(0,0,0,.56),rgba(0,0,0,.88)),
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=90') center/cover;
+  display:flex;align-items:center;justify-content:center;
+  padding:25px;
+  transition:opacity 1s,visibility 1s;
+}
+#invitation.opened{opacity:0;visibility:hidden;pointer-events:none}
+.invitation-frame{
+  width:min(550px,100%);
+  min-height:620px;
+  border:1px solid rgba(200,169,110,.55);
+  outline:1px solid rgba(200,169,110,.15);
+  outline-offset:8px;
+  padding:55px 30px;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;
+  position:relative;
+  background:rgba(5,5,5,.45);
+  backdrop-filter:blur(3px);
+}
+.invitation-frame:before,.invitation-frame:after{
+  content:"✦";position:absolute;color:var(--gold);
+  font-size:18px;left:50%;transform:translateX(-50%);
+}
+.invitation-frame:before{top:20px}
+.invitation-frame:after{bottom:20px}
+.cover-small{font-size:9px;letter-spacing:5px;color:var(--gold)}
+.cover-monogram{
+  font-family:var(--display);
+  font-size:clamp(90px,22vw,150px);
+  color:var(--gold2);line-height:1;
+  margin:35px 0 20px;
+}
+.cover-names{
+  font-family:var(--serif);
+  font-size:clamp(35px,8vw,52px);
+  font-weight:300;letter-spacing:3px;
+}
+.cover-date{
+  color:#b8b0a3;font-size:10px;
+  letter-spacing:4px;margin-top:22px;
+}
+.open-btn{
+  margin-top:55px;
+  padding:16px 32px;
+  border:1px solid var(--gold);
+  background:transparent;color:var(--gold2);
+  font-size:9px;letter-spacing:3px;
+  transition:.35s;
+}
+.open-btn:hover{background:var(--gold);color:#080808}
+.cover-bottom{
+  position:absolute;bottom:42px;
+  font-size:8px;letter-spacing:3px;color:#aaa;
+}
+
+/* NAVIGATION */
+.topbar{
+  height:78px;position:fixed;z-index:1000;
+  top:0;left:0;width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  background:linear-gradient(to bottom,rgba(0,0,0,.8),transparent);
+  transition:.4s;
+}
+.topbar.scrolled{
+  background:rgba(8,8,8,.94);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(15px);
+}
+.brand{
+  font-family:var(--display);
+  font-size:27px;color:var(--gold);
+  letter-spacing:3px;
+}
+.brand small{
+  display:block;font-family:var(--sans);
+  font-size:7px;letter-spacing:3px;
+  color:#aaa;text-align:center;margin-top:2px;
+}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-date{font-size:9px;letter-spacing:2px;color:#b7ad9c}
+.menu-btn{
+  border:1px solid var(--line);background:transparent;
+  width:44px;height:44px;color:var(--gold);
+  display:grid;place-items:center;font-size:20px;
+}
+.menu-overlay{
+  position:fixed;inset:0;z-index:1100;
+  background:rgba(5,5,5,.98);
+  display:flex;align-items:center;justify-content:center;
+  visibility:hidden;opacity:0;transition:.5s;
+}
+.menu-overlay.show{visibility:visible;opacity:1}
+.menu-close{
+  position:absolute;top:25px;right:6%;
+  background:none;border:1px solid var(--line);
+  color:var(--gold);width:45px;height:45px;font-size:22px;
+}
+.menu-links{text-align:center;display:flex;flex-direction:column;gap:12px}
+.menu-links a{
+  font-family:var(--serif);font-size:clamp(35px,7vw,58px);
+  font-weight:300;color:#eee;transition:.3s;
+}
+.menu-links a:hover{color:var(--gold);letter-spacing:4px}
+.menu-number{font:9px var(--sans);letter-spacing:3px;color:var(--gold);margin-right:12px}
+
+/* HERO */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:140px 20px 90px;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.32),rgba(0,0,0,.12) 35%,#080808 100%),
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=95') center 45%/cover;
+}
+.hero:before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse,transparent 20%,rgba(0,0,0,.58) 100%);
+}
+.hero-content{position:relative;z-index:2}
+.hero-kicker{
+  color:var(--gold2);font-size:9px;
+  letter-spacing:6px;text-transform:uppercase;
+}
+.hero-title{
+  font-family:var(--display);
+  font-size:clamp(76px,15vw,180px);
+  font-weight:400;line-height:.78;
+  letter-spacing:-5px;margin:40px 0;
+  text-shadow:0 5px 35px rgba(0,0,0,.4);
+}
+.hero-title span{display:block}
+.hero-title .amp{
+  font-family:var(--serif);font-style:italic;
+  font-size:.43em;color:var(--gold);
+  line-height:1.2;letter-spacing:0;
+}
+.hero-subtitle{
+  font-family:var(--serif);font-size:21px;
+  font-style:italic;color:#d1c8b8;
+}
+.hero-bottom{
+  position:absolute;bottom:40px;left:8%;right:8%;
+  display:flex;justify-content:space-between;align-items:end;
+  z-index:2;color:#c0b8aa;
+}
+.hero-bottom span{font-size:8px;letter-spacing:3px}
+.scroll-indicator{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-indicator i{
+  width:1px;height:45px;background:var(--gold);
+  animation:scrollline 1.7s infinite;
+}
+@keyframes scrollline{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+/* MARQUEE */
+.marquee{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:19px 0;overflow:hidden;white-space:nowrap;
+  color:var(--gold);font-family:var(--serif);
+  font-size:20px;font-style:italic;letter-spacing:2px;
+}
+.marquee-track{display:inline-block;animation:marquee 30s linear infinite}
+.marquee span{padding:0 35px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* INTRO */
+.intro{
+  min-height:650px;display:grid;
+  grid-template-columns:1fr 1fr;align-items:center;
+  gap:8%;padding:150px 10%;
+  background:#0c0c0b;
+}
+.intro-visual{height:570px;position:relative}
+.intro-visual img{filter:brightness(.78)}
+.intro-visual:after{
+  content:"";position:absolute;inset:15px;
+  border:1px solid rgba(200,169,110,.5);
+}
+.intro-caption{
+  position:absolute;bottom:-30px;right:-25px;
+  background:var(--gold);color:#080808;
+  padding:22px 28px;font-family:var(--serif);
+  font-size:20px;font-style:italic;z-index:2;
+}
+.intro-copy{padding:20px 0}
+.intro-copy h2{
+  font-family:var(--serif);font-size:clamp(44px,6vw,75px);
+  font-weight:300;line-height:1.02;margin-top:25px;
+}
+.intro-copy h2 em{color:var(--gold)}
+.intro-copy p{color:var(--muted);font-size:12px;line-height:2.1;margin-top:28px;max-width:460px}
+.signature{
+  font-family:var(--display);font-size:35px;
+  color:var(--gold);margin-top:35px;
+}
+
+/* COUNTDOWN */
+.countdown-section{
+  padding:100px 8%;text-align:center;
+  background:
+    linear-gradient(rgba(0,0,0,.88),rgba(0,0,0,.92)),
+    url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=85') center/cover;
+}
+.countdown-title{
+  font-family:var(--serif);font-size:45px;
+  font-weight:300;margin:18px 0 50px;
+}
+.countdown{
+  display:flex;justify-content:center;gap:clamp(15px,5vw,65px);
+}
+.time-unit{min-width:70px}
+.time-unit strong{
+  display:block;font-family:var(--display);
+  color:var(--gold2);font-size:clamp(42px,8vw,75px);
+  font-weight:400;
+}
+.time-unit span{font-size:8px;letter-spacing:3px;color:#999}
+
+/* COUPLE */
+.couple-section{background:#080808}
+.couple-top{text-align:center;margin-bottom:75px}
+.couple-grid{
+  display:grid;grid-template-columns:1fr 100px 1fr;
+  gap:30px;align-items:center;max-width:1100px;margin:auto;
+}
+.person-card{text-align:center}
+.person-photo{
+  height:530px;position:relative;overflow:hidden;
+}
+.person-photo img{filter:grayscale(35%);transition:1s}
+.person-card:hover img{transform:scale(1.05);filter:grayscale(0)}
+.person-photo:after{
+  content:"";position:absolute;inset:12px;
+  border:1px solid rgba(200,169,110,.55);
+  pointer-events:none;
+}
+.person-role{margin-top:30px}
+.person-role span{font-size:8px;color:var(--gold);letter-spacing:4px}
+.person-role h3{
+  font:clamp(38px,5vw,58px) var(--serif);
+  font-weight:300;margin-top:10px;
+}
+.person-role p{font-size:10px;color:var(--muted);margin-top:10px;line-height:1.8}
+.couple-amp{
+  text-align:center;font:italic 65px var(--serif);color:var(--gold);
+}
+
+/* STORY */
+.story-section{
+  background:#10100e;
+  overflow:hidden;
+}
+.story-header{text-align:center;margin-bottom:100px}
+.story-timeline{
+  max-width:900px;margin:auto;position:relative;
+}
+.story-timeline:before{
+  content:"";position:absolute;top:0;bottom:0;left:50%;
+  width:1px;background:var(--line);
+}
+.story-item{
+  width:50%;padding:0 60px 100px;
+  position:relative;
+}
+.story-item:nth-child(even){margin-left:50%;padding-left:60px}
+.story-item:after{
+  content:"";position:absolute;right:-5px;top:10px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 15px var(--gold);
+}
+.story-item:nth-child(even):after{left:-4px}
+.story-year{font-size:9px;color:var(--gold);letter-spacing:4px}
+.story-item h3{
+  font:36px var(--serif);font-weight:300;margin:15px 0;
+}
+.story-item p{font-size:11px;line-height:2;color:var(--muted)}
+.story-image{height:240px;margin-top:25px;overflow:hidden}
+.story-image img{filter:brightness(.8);transition:.8s}
+.story-item:hover img{transform:scale(1.04)}
+
+/* QUOTE */
+.quote-section{
+  padding:150px 10%;text-align:center;
+  background:#080808;
+}
+.quote-mark{font:100px var(--serif);color:var(--gold);height:75px}
+.quote-text{
+  font:italic clamp(32px,5vw,58px) var(--serif);
+  font-weight:300;max-width:900px;margin:20px auto;
+  line-height:1.25;
+}
+.quote-author{font-size:9px;letter-spacing:4px;color:var(--gold);margin-top:30px}
+
+/* EVENT */
+.event-section{background:#0d0d0c}
+.event-heading{text-align:center;margin-bottom:75px}
+.event-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:25px;max-width:1100px;margin:auto;
+}
+.event-card{
+  min-height:490px;position:relative;overflow:hidden;
+  display:flex;align-items:end;
+  background:#171614;
+}
+.event-card img{
+  position:absolute;inset:0;
+  filter:brightness(.4);transition:1s;
+}
+.event-card:hover img{transform:scale(1.06);filter:brightness(.55)}
+.event-card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.95));
+}
+.event-content{position:relative;z-index:2;padding:40px;width:100%}
+.event-number{font:italic 16px var(--serif);color:var(--gold)}
+.event-content h3{
+  font:48px var(--serif);font-weight:300;margin:12px 0;
+}
+.event-content p{font-size:11px;line-height:2;color:#ccc}
+.event-time{font-size:10px;letter-spacing:2px;color:var(--gold2);margin-top:20px}
+.event-link{
+  display:inline-block;margin-top:25px;
+  border-bottom:1px solid var(--gold);
+  padding-bottom:7px;font-size:8px;letter-spacing:3px;
+  color:var(--gold2);
+}
+
+/* CALENDAR */
+.calendar-section{
+  background:#080808;text-align:center;
+}
+.calendar-wrap{
+  max-width:570px;margin:55px auto 0;
+  padding:35px;border:1px solid var(--line);
+  background:linear-gradient(135deg,#11110f,#080808);
+}
+.calendar-month{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-bottom:25px;border-bottom:1px solid var(--line);
+}
+.calendar-month strong{
+  font:35px var(--serif);font-weight:300;
+}
+.calendar-month span{font-size:8px;letter-spacing:3px;color:var(--gold)}
+.calendar-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:7px;margin-top:25px;
+}
+.calendar-grid div{
+  aspect-ratio:1;display:grid;place-items:center;
+  font-size:11px;color:#aaa;
+}
+.calendar-grid .day-name{color:var(--gold);font-size:9px}
+.calendar-grid .selected{
+  background:var(--gold);color:#080808;
+  border-radius:50%;font-weight:600;
+  box-shadow:0 0 20px rgba(200,169,110,.3);
+}
+.calendar-note{font:italic 19px var(--serif);color:var(--gold);margin-top:25px}
+
+/* GALLERY */
+.gallery-section{background:#11110f}
+.gallery-header{
+  display:flex;justify-content:space-between;
+  align-items:end;margin-bottom:45px;
+}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:95px;gap:12px;
+}
+.gallery-item{
+  position:relative;overflow:hidden;cursor:pointer;
+  background:#222;
+}
+.gallery-item img{transition:1s;filter:brightness(.82)}
+.gallery-item:hover img{transform:scale(1.08);filter:brightness(1)}
+.gallery-item:after{
+  content:"VIEW +";position:absolute;inset:0;
+  display:grid;place-items:center;
+  font-size:9px;letter-spacing:3px;
+  background:rgba(0,0,0,.35);opacity:0;transition:.4s;
+}
+.gallery-item:hover:after{opacity:1}
+.gallery-item:nth-child(1){grid-column:span 7;grid-row:span 4}
+.gallery-item:nth-child(2){grid-column:span 5;grid-row:span 3}
+.gallery-item:nth-child(3){grid-column:span 5;grid-row:span 3}
+.gallery-item:nth-child(4){grid-column:span 4;grid-row:span 3}
+.gallery-item:nth-child(5){grid-column:span 4;grid-row:span 3}
+.gallery-item:nth-child(6){grid-column:span 4;grid-row:span 3}
+.gallery-item:nth-child(7){grid-column:span 6;grid-row:span 3}
+.gallery-item:nth-child(8){grid-column:span 6;grid-row:span 3}
+.lightbox{
+  position:fixed;inset:0;z-index:3000;
+  background:rgba(0,0,0,.96);
+  display:none;align-items:center;justify-content:center;
+  padding:30px;
+}
+.lightbox.show{display:flex}
+.lightbox img{max-width:100%;max-height:85vh;width:auto;height:auto;object-fit:contain}
+.lightbox-close{
+  position:absolute;right:30px;top:25px;
+  color:var(--gold);background:none;border:0;font-size:35px;
+}
+
+/* FILM */
+.film-section{
+  padding:140px 8%;text-align:center;
+  background:#080808;
+}
+.film-frame{
+  max-width:1000px;height:500px;margin:55px auto 0;
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.6)),
+    url('https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1800&q=90') center/cover;
+  display:grid;place-items:center;
+  border:1px solid var(--line);
+}
+.film-play{
+  width:80px;height:80px;border-radius:50%;
+  border:1px solid var(--gold);background:rgba(0,0,0,.35);
+  color:var(--gold);font-size:24px;
+  transition:.3s;
+}
+.film-play:hover{background:var(--gold);color:#080808;transform:scale(1.1)}
+.film-caption{
+  position:absolute;bottom:30px;left:30px;
+  font:italic 22px var(--serif);color:#ddd;
+}
+
+/* RSVP */
+.rsvp-section{
+  background:
+    linear-gradient(rgba(0,0,0,.91),rgba(0,0,0,.94)),
+    url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=85') center/cover;
+}
+.rsvp-layout{
+  display:grid;grid-template-columns:.9fr 1.1fr;
+  gap:10%;max-width:1100px;margin:auto;align-items:center;
+}
+.rsvp-copy h2{
+  font:clamp(50px,7vw,82px) var(--serif);
+  font-weight:300;line-height:.95;margin-top:25px;
+}
+.rsvp-copy p{font-size:11px;color:var(--muted);line-height:2;margin-top:25px}
+.rsvp-form{
+  border:1px solid var(--line);
+  padding:40px;background:rgba(15,15,14,.75);
+}
+.form-label{
+  display:block;font-size:8px;letter-spacing:2px;
+  color:var(--gold);margin-bottom:10px;text-transform:uppercase;
+}
+.form-group{margin-bottom:23px}
+.form-control{
+  width:100%;background:transparent;
+  border:0;border-bottom:1px solid #514b40;
+  color:#eee;padding:13px 0;outline:none;
+  font-size:12px;border-radius:0;
+}
+.form-control:focus{border-color:var(--gold)}
+.form-control option{background:#111}
+.form-control::placeholder{color:#777}
+.submit-btn{
+  width:100%;padding:17px;background:var(--gold);
+  border:1px solid var(--gold);color:#080808;
+  font-size:9px;letter-spacing:3px;
+  transition:.3s;
+}
+.submit-btn:hover{background:transparent;color:var(--gold)}
+.form-status{font-size:10px;color:var(--gold);margin-top:15px;line-height:1.8}
+
+/* GUESTBOOK */
+.guestbook-section{background:#10100e}
+.guestbook-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:9%;
+}
+.guestbook-form{
+  border:1px solid var(--line);padding:35px;
+}
+.guestbook-list{display:flex;flex-direction:column;gap:15px}
+.guest-message{
+  padding:23px;border-left:1px solid var(--gold);
+  background:#151512;
+}
+.guest-message strong{
+  font:23px var(--serif);font-weight:400;color:var(--gold2);
+}
+.guest-message p{font-size:11px;line-height:1.9;color:#aaa;margin-top:10px}
+.guest-message small{font-size:8px;color:#716b60;letter-spacing:2px}
+
+/* GIFT */
+.gift-section{text-align:center;background:#080808}
+.gift-card{
+  max-width:550px;margin:50px auto 0;
+  padding:55px 35px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#151512,#090909);
+  position:relative;
+}
+.gift-icon{font-size:35px;color:var(--gold)}
+.gift-card h3{font:37px var(--serif);font-weight:300;margin:20px 0}
+.gift-card p{font-size:10px;color:var(--muted);line-height:2}
+.bank-name{font-size:9px;letter-spacing:4px;color:var(--gold);margin-top:30px}
+.account-number{
+  font:30px var(--serif);letter-spacing:2px;
+  margin:12px 0;color:var(--gold2);
+}
+.copy-btn{
+  background:transparent;border:1px solid var(--line);
+  color:var(--gold);padding:12px 25px;
+  font-size:8px;letter-spacing:2px;
+}
+.copy-btn:hover{background:var(--gold);color:#080808}
+
+/* CLOSING */
+.closing{
+  min-height:85vh;display:flex;align-items:center;
+  justify-content:center;text-align:center;padding:100px 20px;
+  background:
+    linear-gradient(rgba(0,0,0,.35),#080808),
+    url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=2000&q=90') center/cover;
+}
+.closing-content{max-width:800px}
+.closing h2{
+  font:clamp(65px,12vw,125px) var(--display);
+  line-height:.9;color:var(--gold2);margin:35px 0;
+}
+.closing p{
+  font:italic 23px var(--serif);
+  color:#ddd;line-height:1.7;
+}
+.closing-date{font-size:9px;letter-spacing:5px;color:var(--gold);margin-top:35px}
+
+/* FOOTER */
+footer{
+  padding:55px 8%;background:#050505;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;
+  align-items:center;gap:25px;
+}
+.footer-brand{font:35px var(--display);color:var(--gold)}
+.footer-copy{font-size:8px;letter-spacing:2px;color:#777;line-height:2}
+.footer-top{font-size:8px;letter-spacing:2px;color:var(--gold)}
+
+/* MUSIC */
+.music-btn{
+  position:fixed;bottom:25px;right:25px;z-index:800;
+  width:48px;height:48px;border-radius:50%;
+  background:#12110e;border:1px solid var(--gold);
+  color:var(--gold);font-size:18px;
+  display:none;place-items:center;
+}
+.music-btn.active{display:grid}
+.music-btn.playing{animation:rotate 5s linear infinite}
+@keyframes rotate{to{transform:rotate(360deg)}}
+
+/* REVEAL */
+.reveal{
+  opacity:0;transform:translateY(35px);
+  transition:opacity 1s ease,transform 1s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.delay1{transition-delay:.15s}
+.delay2{transition-delay:.3s}
+.delay3{transition-delay:.45s}
+
+/* RESPONSIVE */
+@media(max-width:850px){
+  .section{padding:100px 7%}
+  .intro{grid-template-columns:1fr;padding:100px 8%;gap:65px}
+  .intro-visual{height:450px;margin-right:20px}
+  .couple-grid{grid-template-columns:1fr 45px 1fr;gap:12px}
+  .person-photo{height:370px}
+  .event-grid{gap:15px}
+  .event-card{min-height:420px}
+  .rsvp-layout{grid-template-columns:1fr;gap:45px}
+  .guestbook-layout{grid-template-columns:1fr;gap:40px}
+  .film-frame{height:380px}
+}
+@media(max-width:560px){
+  .topbar{height:68px;padding:0 6%}
+  .nav-date{display:none}
+  .brand{font-size:24px}
+  .hero{min-height:90vh}
+  .hero-title{letter-spacing:-2px}
+  .hero-bottom{left:7%;right:7%;bottom:25px}
+  .hero-bottom span{font-size:7px;letter-spacing:1px}
+  .intro-visual{height:380px}
+  .intro-caption{right:-10px;font-size:16px}
+  .countdown-section{padding:80px 5%}
+  .countdown{gap:12px}
+  .time-unit{min-width:55px}
+  .time-unit strong{font-size:40px}
+  .time-unit span{font-size:7px;letter-spacing:1px}
+  .couple-grid{grid-template-columns:1fr 30px 1fr;gap:7px}
+  .person-photo{height:260px}
+  .person-role h3{font-size:30px}
+  .person-role p{font-size:9px}
+  .couple-amp{font-size:40px}
+  .story-timeline:before{left:7px}
+  .story-item,.story-item:nth-child(even){
+    width:100%;margin-left:0;padding:0 0 65px 35px;
+  }
+  .story-item:after,.story-item:nth-child(even):after{left:3px;right:auto}
+  .story-image{height:210px}
+  .quote-section{padding:100px 7%}
+  .event-grid{grid-template-columns:1fr}
+  .event-card{min-height:440px}
+  .calendar-wrap{padding:20px 12px}
+  .calendar-grid{gap:3px}
+  .calendar-grid div{font-size:10px}
+  .gallery-header{display:block}
+  .gallery-grid{grid-auto-rows:65px;gap:7px}
+  .gallery-item:nth-child(1){grid-column:span 7;grid-row:span 4}
+  .gallery-item:nth-child(2){grid-column:span 5;grid-row:span 3}
+  .gallery-item:nth-child(3){grid-column:span 5;grid-row:span 3}
+  .gallery-item:nth-child(4),.gallery-item:nth-child(5),.gallery-item:nth-child(6){grid-column:span 4;grid-row:span 2}
+  .gallery-item:nth-child(7),.gallery-item:nth-child(8){grid-column:span 6;grid-row:span 3}
+  .film-frame{height:260px}
+  .rsvp-form,.guestbook-form{padding:25px 20px}
+  .gift-card{padding:40px 20px}
+  .account-number{font-size:25px}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+
+<body class="locked">
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="loader-monogram">D<span style="font-size:.5em">&</span>N</div>
+    <div class="loader-line"></div>
+    <div class="eyebrow">A royal celebration</div>
+  </div>
+</div>
+
+<!-- INVITATION COVER -->
+<div id="invitation">
+  <div class="invitation-frame">
+    <div class="cover-small">YOU ARE CORDIALLY INVITED TO</div>
+    <div class="cover-monogram">D<span style="font-size:.45em">&</span>N</div>
+    <div class="cover-names">Deon <span class="gold">&</span> Natasya</div>
+    <div class="gold-line"></div>
+    <div class="cover-date">20 DECEMBER 2026 · JAKARTA</div>
+    <button class="open-btn" id="openInvitation">OPEN THE INVITATION &nbsp; ↗</button>
+  </div>
+  <div class="cover-bottom">A PRIVATE WEDDING EXPERIENCE · EST. 2026</div>
+</div>
+
+<!-- NAV -->
+<header class="topbar" id="topbar">
+  <a href="#home" class="brand">D&N<small>THE ROYAL WEDDING</small></a>
+  <div class="nav-right">
+    <span class="nav-date">20 · XII · 2026</span>
+    <button class="menu-btn" id="menuOpen" aria-label="Open menu">☰</button>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay">
+  <button class="menu-close" id="menuClose">×</button>
+  <nav class="menu-links">
+    <a href="#home"><span class="menu-number">01</span>Home</a>
+    <a href="#couple"><span class="menu-number">02</span>The Couple</a>
+    <a href="#story"><span class="menu-number">03</span>Our Story</a>
+    <a href="#event"><span class="menu-number">04</span>The Celebration</a>
+    <a href="#gallery"><span class="menu-number">05</span>Gallery</a>
+    <a href="#rsvp"><span class="menu-number">06</span>RSVP</a>
+    <a href="#gift"><span class="menu-number">07</span>Wedding Gift</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<main>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-kicker reveal">Two souls · One destiny</div>
+    <h1 class="hero-title reveal delay1">
+      <span>Deon</span>
+      <span class="amp">&</span>
+      <span>Natasya</span>
+    </h1>
+    <div class="hero-subtitle reveal delay2">A love written in the stars.</div>
+  </div>
+  <div class="hero-bottom">
+    <span>THE BEGINNING OF FOREVER</span>
+    <div class="scroll-indicator">
+      <span>SCROLL TO EXPLORE</span>
+      <i></i>
+    </div>
+    <span>JAKARTA · INDONESIA</span>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>THE ART OF FOREVER</span> ✦
+    <span>DEON & NATASYA</span> ✦
+    <span>A ROYAL CELEBRATION</span> ✦
+    <span>THE ART OF FOREVER</span> ✦
+    <span>DEON & NATASYA</span> ✦
+    <span>A ROYAL CELEBRATION</span> ✦
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="intro" id="invitation-note">
+  <div class="intro-visual reveal">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=90" alt="Wedding celebration">
+    <div class="intro-caption">A moment, forever.</div>
+  </div>
+  <div class="intro-copy reveal delay1">
+    <div class="eyebrow">A MESSAGE FROM THE HEART</div>
+    <h2>Some stories are<br>simply meant to be <em>forever.</em></h2>
+    <div class="gold-line"></div>
+    <p>
+      With hearts full of gratitude and joy, we invite you to witness
+      the beginning of our forever. A celebration of love, promises,
+      and a beautiful journey yet to unfold.
+    </p>
+    <p>
+      Your presence will make this chapter even more meaningful.
+      We would be honored to celebrate this special day with you.
+    </p>
+    <div class="signature">Deon & Natasya</div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="countdown-section">
+  <div class="eyebrow">THE MOMENT WE HAVE BEEN WAITING FOR</div>
+  <h2 class="countdown-title">Counting down to forever.</h2>
+  <div class="countdown">
+    <div class="time-unit"><strong id="days">000</strong><span>DAYS</span></div>
+    <div class="time-unit"><strong id="hours">00</strong><span>HOURS</span></div>
+    <div class="time-unit"><strong id="minutes">00</strong><span>MINUTES</span></div>
+    <div class="time-unit"><strong id="seconds">00</strong><span>SECONDS</span></div>
+  </div>
+</section>
+
+<!-- COUPLE -->
+<section class="section couple-section" id="couple">
+  <div class="couple-top reveal">
+    <div class="eyebrow">THE PEOPLE BEHIND THE PROMISE</div>
+    <h2 class="section-heading" style="margin-top:22px">The <em>Couple</em></h2>
+    <p class="section-intro" style="margin-left:auto;margin-right:auto">
+      Two different worlds, one beautiful story, and a lifetime to write together.
+    </p>
+  </div>
+
+  <div class="couple-grid">
+    <div class="person-card reveal">
+      <div class="person-photo">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=85" alt="Groom portrait">
+      </div>
+      <div class="person-role">
+        <span>THE GROOM</span>
+        <h3>Deon</h3>
+        <p>Son of<br><strong>Mr. [Father's Name] & Mrs. [Mother's Name]</strong></p>
+      </div>
+    </div>
+
+    <div class="couple-amp">&</div>
+
+    <div class="person-card reveal delay1">
+      <div class="person-photo">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85" alt="Bride portrait">
+      </div>
+      <div class="person-role">
+        <span>THE BRIDE</span>
+        <h3>Natasya</h3>
+        <p>Daughter of<br><strong>Mr. [Father's Name] & Mrs. [Mother's Name]</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section story-section" id="story">
+  <div class="story-header reveal">
+    <div class="eyebrow">CHAPTERS OF US</div>
+    <h2 class="section-heading" style="margin-top:20px">Our <em>Story</em></h2>
+    <p class="section-intro" style="margin-left:auto;margin-right:auto">
+      Every love story has its own rhythm. This is ours.
+    </p>
+  </div>
+
+  <div class="story-timeline">
+    <article class="story-item reveal">
+      <div class="story-year">CHAPTER I · THE FIRST MOMENT</div>
+      <h3>When our paths crossed</h3>
+      <p>
+        Sometimes the most extraordinary stories begin with the simplest
+        encounter. A moment that neither of us knew would become the start
+        of something beautiful.
+      </p>
+      <div class="story-image">
+        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=85" alt="Couple story">
+      </div>
+    </article>
+
+    <article class="story-item reveal">
+      <div class="story-year">CHAPTER II · THE JOURNEY</div>
+      <h3>Growing together</h3>
+      <p>
+        Through little adventures, endless conversations, laughter,
+        and lessons, we discovered that home was never just a place.
+        It was a person.
+      </p>
+      <div class="story-image">
+        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85" alt="Couple together">
+      </div>
+    </article>
+
+    <article class="story-item reveal">
+      <div class="story-year">CHAPTER III · THE PROMISE</div>
+      <h3>A lifetime begins</h3>
+      <p>
+        And now, with grateful hearts, we choose each other.
+        Not only for the beautiful days, but for every chapter
+        that life has yet to write.
+      </p>
+      <div class="story-image">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85" alt="Wedding promise">
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="quote-mark">“</div>
+  <p class="quote-text reveal">
+    I have found the one whom my soul loves.
+    And in every lifetime, I would still choose you.
+  </p>
+  <div class="quote-author">A PROMISE FOR ETERNITY</div>
+</section>
+
+<!-- EVENT -->
+<section class="section event-section" id="event">
+  <div class="event-heading reveal">
+    <div class="eyebrow">SAVE THE DATE</div>
+    <h2 class="section-heading" style="margin-top:20px">The <em>Celebration</em></h2>
+    <p class="section-intro" style="margin-left:auto;margin-right:auto">
+      A day of elegance, love, and unforgettable memories.
+    </p>
+  </div>
+
+  <div class="event-grid">
+    <article class="event-card reveal">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85" alt="Wedding ceremony">
+      <div class="event-content">
+        <div class="event-number">01 / THE SACRED VOW</div>
+        <h3>The Ceremony</h3>
+        <p>Sunday, 20 December 2026<br>08.00 WIB – 10.00 WIB<br>[Venue Name], Jakarta</p>
+        <div class="event-time">THE EXCHANGE OF VOWS</div>
+        <a class="event-link" href="https://maps.google.com/?q=Jakarta" target="_blank">VIEW LOCATION ↗</a>
+      </div>
+    </article>
+
+    <article class="event-card reveal delay1">
+      <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=85" alt="Wedding reception">
+      <div class="event-content">
+        <div class="event-number">02 / THE GRAND EVENING</div>
+        <h3>The Reception</h3>
+        <p>Sunday, 20 December 2026<br>18.00 WIB – 21.00 WIB<br>[Venue Name], Jakarta</p>
+        <div class="event-time">AN EVENING TO REMEMBER</div>
+        <a class="event-link" href="https://maps.google.com/?q=Jakarta" target="_blank">VIEW LOCATION ↗</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="section calendar-section">
+  <div class="eyebrow reveal">MARK YOUR CALENDAR</div>
+  <h2 class="section-heading reveal" style="margin-top:20px">December <em>2026</em></h2>
+
+  <div class="calendar-wrap reveal">
+    <div class="calendar-month">
+      <span>THE WEDDING DAY</span>
+      <strong>December 2026</strong>
+      <span>20 / SUN</span>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+    <div class="calendar-note">A date to remember. A love to celebrate.</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section gallery-section" id="gallery">
+  <div class="gallery-header reveal">
+    <div>
+      <div class="eyebrow">THE VISUAL CHAPTER</div>
+      <h2 class="section-heading" style="margin-top:20px">Moments <em>in Time</em></h2>
+    </div>
+    <p class="section-intro">A collection of beautiful moments and memories.</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85" alt="Wedding gallery 1"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 2"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 3"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 4"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 5"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 6"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 7"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=900&q=85" alt="Wedding gallery 8"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">×</button>
+  <img src="" id="lightboxImage" alt="Gallery preview">
+</div>
+
+<!-- FILM -->
+<section class="film-section" id="film">
+  <div class="eyebrow reveal">THE WEDDING FILM</div>
+  <h2 class="section-heading reveal" style="margin-top:20px">A story worth <em>watching.</em></h2>
+  <p class="section-intro reveal" style="margin-left:auto;margin-right:auto">
+    A moving portrait of two hearts becoming one.
+  </p>
+  <div class="film-frame reveal">
+    <button class="film-play" id="filmPlay" aria-label="Play wedding film">▶</button>
+    <div class="film-caption">The beginning of our forever.</div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="section rsvp-section" id="rsvp">
+  <div class="rsvp-layout">
+    <div class="rsvp-copy reveal">
+      <div class="eyebrow">KINDLY RESPOND</div>
+      <h2>Your presence<br>is our greatest <em class="gold">gift.</em></h2>
+      <div class="gold-line"></div>
+      <p>
+        We would be delighted to have you with us.
+        Kindly confirm your attendance through the form.
+        We look forward to celebrating together.
+      </p>
+    </div>
+
+    <form class="rsvp-form reveal delay1" id="rsvpForm">
+      <div class="eyebrow" style="margin-bottom:30px">RESERVATION OF PRESENCE</div>
+
+      <div class="form-group">
+        <label class="form-label" for="guestName">FULL NAME</label>
+        <input class="form-control" id="guestName" type="text" placeholder="Your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="guestPhone">PHONE NUMBER</label>
+        <input class="form-control" id="guestPhone" type="tel" placeholder="Your phone number">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="guestAttendance">WILL YOU ATTEND?</label>
+        <select class="form-control" id="guestAttendance" required>
+          <option value="">Choose your response</option>
+          <option value="Hadir">Joyfully accepts</option>
+          <option value="Tidak hadir">Regretfully declines</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="guestCount">NUMBER OF GUESTS</label>
+        <select class="form-control" id="guestCount">
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="guestNote">A LITTLE NOTE (OPTIONAL)</label>
+        <textarea class="form-control" id="guestNote" rows="3" placeholder="Write your message..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">CONFIRM MY PRESENCE ↗</button>
+      <div class="form-status" id="rsvpStatus"></div>
+    </form>
+  </div>
+</section>
+
+<!-- GUESTBOOK -->
+<section class="section guestbook-section" id="guestbook">
+  <div class="guestbook-layout">
+    <div class="reveal">
+      <div class="eyebrow">WORDS TO KEEP FOREVER</div>
+      <h2 class="section-heading" style="margin-top:20px">The <em>Guestbook</em></h2>
+      <p class="section-intro">
+        Leave a heartfelt wish, a prayer, or a beautiful message
+        for the beginning of our new chapter.
+      </p>
+    </div>
+
+    <div class="guestbook-form reveal delay1">
+      <form id="messageForm">
+        <div class="form-group">
+          <label class="form-label" for="messageName">YOUR NAME</label>
+          <input class="form-control" id="messageName" placeholder="Write your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="messageText">YOUR MESSAGE</label>
+          <textarea class="form-control" id="messageText" rows="4" placeholder="Your wishes for the couple..." required></textarea>
+        </div>
+        <button class="submit-btn" type="submit">LEAVE A MESSAGE ↗</button>
+        <div class="form-status" id="messageStatus"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="guestbook-list" id="guestbookList" style="max-width:850px;margin:55px auto 0"></div>
+</section>
+
+<!-- GIFT -->
+<section class="section gift-section" id="gift">
+  <div class="eyebrow reveal">A TOKEN OF LOVE</div>
+  <h2 class="section-heading reveal" style="margin-top:20px">Wedding <em>Gift</em></h2>
+  <p class="section-intro reveal" style="margin-left:auto;margin-right:auto">
+    Your presence is already a precious gift. For those who wish
+    to send a token of love, we have provided the details below.
+  </p>
+
+  <div class="gift-card reveal">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <div class="gift-icon">✧</div>
+    <h3>A Gift from the Heart</h3>
+    <p>With love and gratitude, thank you for being part of our celebration.</p>
+    <div class="bank-name">BANK CENTRAL ASIA</div>
+    <div class="account-number" id="accountNumber">1234567890</div>
+    <p>DEON / NATASYA</p>
+    <button class="copy-btn" id="copyAccount">COPY ACCOUNT NUMBER</button>
+    <div class="form-status" id="copyStatus"></div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="closing-content reveal">
+    <div class="eyebrow">WITH LOVE, FROM OUR HEARTS</div>
+    <h2>Forever<br>begins here.</h2>
+    <p>
+      Thank you for being part of our story.<br>
+      We cannot wait to celebrate this moment with you.
+    </p>
+    <div class="closing-date">DEON & NATASYA · 20 DECEMBER 2026</div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div>
+    <div class="footer-brand">D&N</div>
+    <div class="footer-copy">THE ROYAL WEDDING · 2026</div>
+  </div>
+  <div class="footer-copy">MADE WITH LOVE<br>DEON & NATASYA</div>
+  <a href="#home" class="footer-top">BACK TO TOP ↑</a>
+</footer>
+
+<!-- MUSIC -->
+<button class="music-btn" id="musicBtn" aria-label="Toggle music">♫</button>
+<audio id="backgroundMusic" loop preload="none">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* =========================================
+   DEON & NATASYA — WEBSITE CONFIGURATION
+   EDIT THE DETAILS BELOW
+========================================= */
+
+const WEDDING = {
+  // Format: YYYY-MM-DDTHH:MM:SS+07:00
+  date: "2026-12-20T08:00:00+07:00",
+
+  // Replace with the real WhatsApp number.
+  whatsapp: "6281234567890",
+
+  // Replace with real wedding details.
+  location: "Jakarta",
+  bankAccount: "1234567890"
+};
+
+/* LOADER */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").classList.add("hide");
+  }, 900);
+});
+
+/* OPEN INVITATION */
+const invitation = document.getElementById("invitation");
+const music = document.getElementById("backgroundMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+document.getElementById("openInvitation").addEventListener("click", () => {
+  invitation.classList.add("opened");
+  document.body.classList.remove("locked");
+  musicBtn.classList.add("active");
+
+  music.play().then(() => {
+    musicBtn.classList.add("playing");
+  }).catch(() => {
+    musicBtn.classList.remove("playing");
+  });
+});
+
+musicBtn.addEventListener("click", () => {
+  if (music.paused) {
+    music.play().then(() => musicBtn.classList.add("playing")).catch(() => {});
+  } else {
+    music.pause();
+    musicBtn.classList.remove("playing");
+  }
+});
+
+/* NAVIGATION */
+const menuOverlay = document.getElementById("menuOverlay");
+
+document.getElementById("menuOpen").addEventListener("click", () => {
+  menuOverlay.classList.add("show");
+});
+
+document.getElementById("menuClose").addEventListener("click", () => {
+  menuOverlay.classList.remove("show");
+});
+
+document.querySelectorAll(".menu-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    menuOverlay.classList.remove("show");
+  });
+});
+
+window.addEventListener("scroll", () => {
+  document.getElementById("topbar").classList.toggle("scrolled", window.scrollY > 60);
+});
+
+/* COUNTDOWN */
+function updateCountdown() {
+  const target = new Date(WEDDING.date).getTime();
+  const now = Date.now();
+  let distance = target - now;
+
+  if (distance < 0) distance = 0;
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((distance / (1000 * 60)) % 60);
+  const seconds = Math.floor((distance / 1000) % 60);
+
+  document.getElementById("days").textContent = String(days).padStart(3, "0");
+  document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+  document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+  document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* CALENDAR — DECEMBER 2026 */
+function createCalendar() {
+  const grid = document.getElementById("calendarGrid");
+  const names = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+
+  names.forEach(name => {
+    const el = document.createElement("div");
+    el.className = "day-name";
+    el.textContent = name;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(2026, 11, 1).getDay();
+  const totalDays = 31;
+
+  for (let i = 0; i < firstDay; i++) {
+    grid.appendChild(document.createElement("div"));
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    const el = document.createElement("div");
+    el.textContent = day;
+    if (day === 20) el.classList.add("selected");
+    grid.appendChild(el);
+  }
+}
+createCalendar();
+
+/* REVEAL ANIMATION */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold: 0.12});
+
+document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+/* GALLERY LIGHTBOX */
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+
+document.querySelectorAll(".gallery-item img").forEach(img => {
+  img.addEventListener("click", () => {
+    lightboxImage.src = img.src;
+    lightbox.classList.add("show");
+  });
+});
+
+document.getElementById("lightboxClose").addEventListener("click", () => {
+  lightbox.classList.remove("show");
+});
+
+lightbox.addEventListener("click", e => {
+  if (e.target === lightbox) lightbox.classList.remove("show");
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    lightbox.classList.remove("show");
+    menuOverlay.classList.remove("show");
+  }
+});
+
+/* WEDDING FILM */
+document.getElementById("filmPlay").addEventListener("click", () => {
+  alert("Wedding film belum ditambahkan. Ganti bagian ini dengan link video pernikahan Deon & Natasya.");
+});
+
+/* RSVP */
+document.getElementById("rsvpForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const name = document.getElementById("guestName").value.trim();
+  const phone = document.getElementById("guestPhone").value.trim();
+  const attendance = document.getElementById("guestAttendance").value;
+  const count = document.getElementById("guestCount").value;
+  const note = document.getElementById("guestNote").value.trim();
+
+  if (!name || !attendance) return;
+
+  const message =
+`ROYAL WEDDING RSVP
+Deon & Natasya
+
+Nama: ${name}
+Nomor telepon: ${phone || "-"}
+Kehadiran: ${attendance}
+Jumlah tamu: ${count}
+Pesan: ${note || "-"}`;
+
+  document.getElementById("rsvpStatus").textContent =
+    "Mengarahkan ke WhatsApp untuk mengirim konfirmasi...";
+
+  const url = "https://wa.me/" + WEDDING.whatsapp + "?text=" + encodeURIComponent(message);
+  window.open(url, "_blank");
+});
+
+/* GUESTBOOK — LOCAL BROWSER STORAGE */
+const STORAGE_KEY = "dn_royal_guestbook";
+
+function getMessages() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function renderMessages() {
+  const list = document.getElementById("guestbookList");
+  const messages = getMessages();
+
+  list.innerHTML = "";
+
+  if (messages.length === 0) {
+    list.innerHTML = '<p style="font-size:11px;color:#777;text-align:center">Be the first to leave a message.</p>';
+    return;
+  }
+
+  messages.slice().reverse().forEach(message => {
+    const card = document.createElement("div");
+    card.className = "guest-message";
+
+    const name = document.createElement("strong");
+    name.textContent = message.name;
+
+    const text = document.createElement("p");
+    text.textContent = message.text;
+
+    const date = document.createElement("small");
+    date.textContent = message.date;
+
+    card.append(name, text, date);
+    list.appendChild(card);
+  });
+}
+
+document.getElementById("messageForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const name = document.getElementById("messageName").value.trim();
+  const text = document.getElementById("messageText").value.trim();
+
+  if (!name || !text) return;
+
+  const messages = getMessages();
+  messages.push({
+    name,
+    text,
+    date: new Date().toLocaleDateString("id-ID", {
+      day:"numeric",month:"long",year:"numeric"
+    })
+  });
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    document.getElementById("messageStatus").textContent = "Your message has been saved in this browser.";
+    document.getElementById("messageForm").reset();
+    renderMessages();
+  } catch {
+    document.getElementById("messageStatus").textContent = "Could not save the message in this browser.";
+  }
+});
+
+renderMessages();
+
+/* COPY BANK ACCOUNT */
+document.getElementById("copyAccount").addEventListener("click", async () => {
+  const number = WEDDING.bankAccount;
+  const status = document.getElementById("copyStatus");
+
+  try {
+    await navigator.clipboard.writeText(number);
+    status.textContent = "Account number copied.";
+  } catch {
+    const input = document.createElement("textarea");
+    input.value = number;
+    document.body.appendChild(input);
+    input.select();
+
+    try {
+      document.execCommand("copy");
+      status.textContent = "Account number copied.";
+    } catch {
+      status.textContent = "Please copy the number manually: " + number;
+    }
+
+    input.remove();
+  }
+});
+
+/* DYNAMIC BANK NUMBER */
+document.getElementById("accountNumber").textContent = WEDDING.bankAccount;
+</script>
+
+</body>
+</html>
